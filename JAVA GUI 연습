@@ -1,0 +1,56 @@
+import java.awt.*;
+import javax.swing.*;
+
+
+public class MyGUI {
+
+	public static void main(String[] args) {
+		//heavyweight container
+		JFrame frame = new JFrame("19011449 JAVA assignment");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame 제목과 창 종료 실행
+		
+		//lightweight container
+		JPanel primary = new JPanel();
+		primary.setPreferredSize(new Dimension(400, 300));
+		primary.setBackground(Color.white);
+		primary.setLayout(null); //layout manager disable
+		//배경색 설정, 레이아웃 메니저 disable
+		
+		//component
+		JLabel lbl1, lbl2, lbl3, lbl4;
+		lbl1 = new JLabel("SEJONG University");
+		lbl1.setFont(new Font("Verdana", Font.BOLD, 20));
+		lbl1.setBounds(130, 50, 250, 50);
+		primary.add(lbl1);
+		
+		//세종대학교 표기. 검정색
+		
+		lbl2 = new JLabel("Department of computer science");
+		lbl2.setFont(new Font("Verdana", Font.BOLD, 20));
+		lbl2.setForeground(Color.blue);
+		lbl2.setBounds(70, 110, 500, 50);
+		primary.add(lbl2);
+		//컴퓨터 공학과 표기. 파랑색
+		
+		lbl3 = new JLabel("19011449");
+		lbl3.setFont(new Font("Verdana", Font.BOLD, 20));
+		lbl3.setForeground(Color.magenta);
+		lbl3.setBounds(180, 170, 200, 50);
+		primary.add(lbl3);
+		//학번 표기. 마젠타색
+		lbl4 = new JLabel("Yun, taegang");
+		lbl4.setFont(new Font("Verdana", Font.BOLD, 20));
+		lbl4.setForeground(Color.blue);
+		lbl4.setBounds(150, 230, 200, 50);
+		primary.add(lbl4);
+		//이름 표기. 파란색
+		
+		frame.getContentPane().add(primary);
+		frame.pack();
+		frame.setVisible(true);
+		
+
+	}//main()
+
+}//MyGUI class
