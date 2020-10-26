@@ -1,0 +1,53 @@
+
+public class Driver {
+
+	public static void main(String[] args) {
+		
+		
+		BankAccount B1 = new BankAccount();
+		BankAccount B2 = new BankAccount();
+		BankAccount B3 = new BankAccount();
+		
+		B1.getstrName();
+		B1.getstrPhoneNumber();
+		B1.getnAccountNumber();
+		B1.getnBalance();
+		B1.getbDormantAccount();
+		
+		B1.setstrName("Hong");
+		B1.setnAccountNumber(369842);
+		B1.setnBalance(236365);
+		B1.setbDormantAccount(true);
+		B1.toStringp();
+		System.out.println("");
+		
+		B2.getstrName();
+		B2.getstrPhoneNumber();
+		B2.getnAccountNumber();
+		B2.getnBalance();
+		B2.getbDormantAccount();
+		
+		B2.setstrName("Hong");
+		B2.setnAccountNumber(267816);
+		B2.setnBalance(0);
+		B2.setbDormantAccount(false);
+		B2.toStringp();
+		System.out.println("");
+		
+		B3.getstrName();
+		B3.getstrPhoneNumber();
+		B3.getnAccountNumber();
+		B3.getnBalance();
+		B3.getbDormantAccount();
+		
+		B3.setstrName("Kang");
+		B3.setnAccountNumber(895147);
+		B3.setnBalance(123456);
+		B3.setbDormantAccount(true);
+		B3.toStringp();
+		
+		
+	
+	}
+
+}
