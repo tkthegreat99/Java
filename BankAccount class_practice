@@ -1,0 +1,73 @@
+
+public class BankAccount {
+
+	private String strName;
+	private String strPhoneNumber;
+	int nAccountNumber;
+	int nBalance;
+	boolean bDormantAccount;
+	final double RATE = 0.02;
+	
+	
+	BankAccount(){	}
+	
+	
+	public String getstrName(){
+		return strName;
+	}
+	public String getstrPhoneNumber() {
+		return strPhoneNumber;
+	}
+	public int getnAccountNumber() { 
+		return nAccountNumber;
+	}
+	public int getnBalance() {
+		return nBalance;
+	}
+	public boolean getbDormantAccount() {
+		return bDormantAccount;
+	}
+	
+	public void setstrName(String strName) {
+		this.strName = strName;
+	}
+	public void setstrPhoneNumber(String strPhoneNumber) {
+		this.strPhoneNumber = strPhoneNumber;
+	}
+	public void setnAccountNumber(int nAccountNumber) {
+		this.nAccountNumber = nAccountNumber;
+	}
+	public void setnBalance(int nBalance) {
+		this.nBalance = nBalance;
+	}
+	public void setbDormantAccount(boolean bDormantAccount) {
+		this.bDormantAccount = bDormantAccount;
+	}
+	
+	public void toStringp() {
+		System.out.println(this.strName);
+		System.out.println(this.nAccountNumber);
+		System.out.println(this.nBalance);
+		System.out.println(this.bDormantAccount);
+		
+	}
+	
+	public void deposit(int plus, boolean d) {
+		if(d == false) return;
+		this.nBalance += plus;
+	}
+	public void withdraw(int minus, boolean d) {
+		if(d == false) return;
+		this.nBalance -= minus;
+	}
+	public void addInterest(int RATE, boolean d) {
+		if(d== false) return;
+		this.nBalance = this.nBalance + this.nBalance * RATE;
+	}
+	public void combineAccount(int nBalance) {
+		this.nBalance = this.nBalance + nBalance;
+	}
+	
+
+	
+}
