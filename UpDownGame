@@ -1,0 +1,216 @@
+*************************************UpDownGame.java********************************
+
+import javax.swing.JFrame;
+
+public class UpDownGame {
+
+	public static void main(String[] args) {
+		
+		JFrame frame = new JFrame("UP DOWN GAME");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		
+		
+		UpDownGamePanel primary = new UpDownGamePanel();
+		frame.getContentPane().add(primary);
+		
+		frame.pack();
+		frame.setVisible(true);
+	}
+
+}
+
+**********************************UpDownGamePanel.java******************************************
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class UpDownGamePanel extends JPanel{
+	
+	private JPanel leftPanel, rightPanel;
+	private JLabel lblTitle, lblMark, lblHint;
+	private JButton btnRandom, btnInput;
+	private JTextField txtInput;
+	private int _random, _input;
+	//2. declaration of listener object
+	private GameListener gameL;
+	private int l_limit, r_limit; //왼쪽 오른쪽 범위를 따로 놓음
+	private int count;
+	private JLabel lblLeftInterval; // 왼쪽 오른쪽 라벨을 따로 추가
+	private JLabel lblRightInterval;
+	private JLabel lblCount; //카운트 라벨
+	
+	
+	public UpDownGamePanel() {
+		setBackground(Color.white);
+		setPreferredSize(new Dimension(630, 420));
+		setLayout(null);
+		//2.creating of listener object
+		gameL = new GameListener();
+		l_limit = 1; //여기서 초기화 해놓기
+		r_limit = 100;
+		count = 0;
+		
+		leftPanel = new JPanel();
+		leftPanel.setBounds(10, 10, 300, 400);
+		leftPanel.setBackground(Color.cyan);
+		leftPanel.setLayout(null);
+		add(leftPanel);
+		
+		rightPanel = new JPanel();
+		rightPanel.setBounds(320, 10, 300, 400);
+		rightPanel.setBackground(Color.pink);
+		rightPanel.setLayout(null);
+		add(rightPanel);
+		
+		lblTitle = new JLabel("UP-DOWN GAME");
+		lblTitle.setBounds(10, 40, 280,60);
+		lblTitle.setFont(new Font("Verdana", Font.BOLD, 26));
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		leftPanel.add(lblTitle);
+		
+		lblMark = new JLabel("?");
+		lblMark.setBounds(10, 110, 280, 180);
+		lblMark.setFont(new Font("Verdana", Font.BOLD, 80));
+		lblMark.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMark.setVisible(false);
+		leftPanel.add(lblMark);
+		
+		lblHint = new JLabel("RIGHT");
+		lblHint.setBounds(10, 300, 280, 60);
+		lblHint.setFont(new Font("Verdana", Font.BOLD, 20));
+		lblHint.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHint.setVisible(false);
+		leftPanel.add(lblHint);		
+		
+		lblLeftInterval = new JLabel("1"+" "+"~");
+		lblLeftInterval.setBounds(40, 160, 50, 40);
+		lblLeftInterval.setFont(new Font("Verdana", Font.BOLD, 20));
+		lblLeftInterval.setVisible(false);
+		rightPanel.add(lblLeftInterval);
+		
+		lblRightInterval = new JLabel(" "+"100");
+		lblRightInterval.setBounds(80, 160, 150, 40);
+		lblRightInterval.setFont(new Font("Verdana", Font.BOLD, 20));
+		lblRightInterval.setVisible(false);
+		rightPanel.add(lblRightInterval);
+		
+		lblCount = new JLabel("Count: "+"0");
+		lblCount.setBounds(40, 210, 100, 40);
+		lblCount.setFont(new Font("Verdana", Font.BOLD, 20));
+		lblCount.setVisible(false);
+		rightPanel.add(lblCount);
+		
+		Font fnt = new Font("Verdana", Font.BOLD, 14);
+		
+		btnRandom = new JButton("Random Number");
+		btnRandom.setBounds(40, 60, 220, 40);
+		btnRandom.setFont(fnt);
+		//3.add the listener object to the component
+		btnRandom.addActionListener(gameL);
+		rightPanel.add(btnRandom);
+		
+		txtInput = new JTextField();
+		txtInput.setBounds(40, 110, 115, 40);
+		txtInput.setFont(fnt);
+		txtInput.setEnabled(false);
+		txtInput.addActionListener(gameL);
+		rightPanel.add(txtInput);
+		
+		btnInput = new JButton("Input");
+		btnInput.setBounds(160, 110, 100, 40);
+		btnInput.setFont(fnt);
+		btnInput.setEnabled(false);
+		btnInput.addActionListener(gameL);
+		rightPanel.add(btnInput);
+		
+		_random = _input = 0;
+	}//constructor
+	
+	//1. listener class
+	private class GameListener implements ActionListener{
+		public void actionPerformed(ActionEvent event) {
+		//4.event handling
+		Object obj = event.getSource();
+		if(obj == btnRandom) {
+			_random = (int)(Math.random()*100) + 1; //1 ~100
+			lblMark.setText("?");
+			lblMark.setVisible(true);
+			
+			txtInput.setEnabled(true);
+			btnInput.setEnabled(true);
+			btnRandom.setEnabled(false);
+			lblLeftInterval.setVisible(true);
+			lblRightInterval.setVisible(true);
+			lblCount.setVisible(true);
+			
+		}
+		else if(obj == txtInput || obj == btnInput) {
+			_input = Integer.parseInt(txtInput.getText());
+			txtInput.setText("");
+			if(_random < _input) {
+				lblHint.setText("DOWN");
+				lblHint.setVisible(true);
+				lblRightInterval.setText(""+Integer.toString(_input-1));
+				count++;
+				lblCount.setText("Count: "+Integer.toString(count));
+				//input보다 1작은 숫자로 표시되게
+				//카운트+1
+			}
+			else if(_random > _input) {
+				lblHint.setText("UP");
+				lblHint.setVisible(true);
+				lblLeftInterval.setText(Integer.toString(_input+1)+"~");
+				count++;
+				lblCount.setText("Count: "+Integer.toString(count));
+				//input보다 1큰 숫자로 표시되게
+				//카운트+1
+			}
+			else {//_random == _input
+				lblHint.setText("RIGHT");
+				lblMark.setText(Integer.toString(_input));
+				lblHint.setVisible(true);
+				count++;
+				lblCount.setText("Count: "+Integer.toString(count));
+				//맞혀도 카운트는 세지니까 +1
+				
+				
+				int result = JOptionPane.showConfirmDialog(rightPanel, "CONTINUE?");
+				if(result == JOptionPane.YES_OPTION) {
+					lblHint.setVisible(false);
+					lblMark.setVisible(false);
+					txtInput.setEnabled(false);
+					btnInput.setEnabled(false);
+					btnRandom.setEnabled(true);
+					lblLeftInterval.setText("1"+" "+"~");
+					lblRightInterval.setText(" "+"100");
+					lblLeftInterval.setVisible(false);
+					lblRightInterval.setVisible(false);
+					lblCount.setVisible(false);
+					count = 0;
+					lblCount.setText("Count: "+"0");
+					
+					//yes누르면 
+					//우선 간격 다시 초기화, 카운트 초기화 필요하고
+					//나머지는 버튼 껐다 키는 과정 반복
+				}
+				else if(result == JOptionPane.NO_OPTION) {
+					System.exit(0);
+				}
+				else { //result == CANCEL
+					
+				}
+			}
+			
+		}
+		
+			
+			
+		}//actionPerformed()
+	}//GameListener class
+	
+	
+	
+}
+
