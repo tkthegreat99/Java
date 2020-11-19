@@ -1,0 +1,158 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+DrawExam.java
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+import javax.swing.JFrame;
+
+public class DrawExam {
+
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Draw Example");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		DrawPanel primary  = new DrawPanel();
+		frame.getContentPane().add(primary);
+		frame.pack();
+		frame.setVisible(true);
+
+	}
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+DrawPanel.java
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+
+public class DrawPanel extends JPanel {
+	private ArrayList<DrawData> _ptList;
+	//private Point _ptDot;
+	private int 			_dotSize;
+	private Color 			_selectedColor;
+	private JTextField 		_txtDotSize;
+	private JButton 		_btnColor;
+	
+	public DrawPanel() {
+		setPreferredSize(new Dimension(800,600));
+		setBackground(Color.white);
+		addMouseListener(new DrawListener());
+		
+		_txtDotSize = new JTextField(10);
+		_txtDotSize.setText("10");
+		add(_txtDotSize);
+		
+		
+		_btnColor = new JButton("Color Chooser");
+		_btnColor.addActionListener(new ButtonListener());
+		add(_btnColor);
+		
+		_selectedColor = Color.black;
+		_dotSize = 100;
+		_ptList = new ArrayList<DrawData>();
+		//_ptDot = new Point();
+	}//DrawPanel()
+	
+	public void setDotSize(int size) {
+		_dotSize = size;
+	}
+	public int getDotSize() {return _dotSize;}
+	
+	
+	public void paintComponent(Graphics page) {
+		super.paintComponent(page);
+		
+		//page.fillOval(_ptDot.x - _dotSize/2, _ptDot.y - _dotSize/2,_dotSize, _dotSize);
+		for(DrawData data: _ptList) {
+			//Point pt = _ptList.get(i);
+			//page.fillOval(pt.x - _dotSize/2, pt.y - _dotSize/2,_dotSize, _dotSize);
+			page.setColor(data.color);
+			page.fillOval(data.ptDot.x-data.dotSize/2, data.ptDot.y-data.dotSize/2, data.dotSize, data.dotSize);
+		}
+	} //paintComponent()
+	
+	
+	private class DrawListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			//_ptList.add(e.getPoint());
+			_ptList.add(new DrawData(e.getPoint(),_selectedColor,Integer.parseInt(_txtDotSize.getText())));
+			repaint();
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	
+	private class ButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			Object obj = e.getSource();
+			if(obj == _btnColor) {
+				_selectedColor = JColorChooser.showDialog(_btnColor, "Color Chooser", _selectedColor);
+			}
+		}
+		
+	}
+	
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+DrawData.java
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+
+import java.awt.Color;
+import java.awt.Point;
+
+
+public class DrawData {
+	public Point ptDot;
+	public Color color;
+	public int dotSize;
+	
+	
+	public DrawData() {
+		ptDot = new Point();
+		dotSize = 0;
+		color = Color.black;
+	}
+	
+	public DrawData(Point pt, Color c,int size) {
+		ptDot = pt;
+		color = c;
+		dotSize = size;
+	}
+}
+
+
+
